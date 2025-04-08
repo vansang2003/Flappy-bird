@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game cho Ngọc Minh nè!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #FFB6C1, #FFC0CB, #FFDAB9, #FFE4E1);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .password-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(255, 192, 203, 0.5);
+            text-align: center;
+            border: 2px solid #FFB6C1;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+        .password-container:hover {
+            transform: scale(1.02);
+        }
+        h1 {
+            color: #FF69B4;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(255, 192, 203, 0.5);
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        input {
+            padding: 12px;
+            width: 200px;
+            border: 2px solid #FFB6C1;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            background-color: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+        }
+        input:focus {
+            transform: scale(1.02);
+            box-shadow: 0 0 15px rgba(255, 182, 193, 0.5);
+            outline: none;
+        }
+        button {
+            padding: 12px 25px;
+            background-color: #FFB6C1;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(255, 182, 193, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        button:hover {
+            background-color: #FFC0CB;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 182, 193, 0.5);
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        .heart {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background-color: #FF69B4;
+            transform: rotate(45deg);
+            animation: heartFloat 4s ease-in-out infinite;
+        }
+        .heart:before,
+        .heart:after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background-color: #FF69B4;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .heart:before {
+            left: -10px;
+        }
+        .heart:after {
+            top: -10px;
+        }
+        @keyframes heartFloat {
+            0% { transform: rotate(45deg) translateY(0) scale(1); opacity: 1; }
+            100% { transform: rotate(45deg) translateY(-100vh) scale(0.5); opacity: 0; }
+        }
+        #message {
+            margin-top: 15px;
+            color: #FF69B4;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(255, 192, 203, 0.5);
+            animation: bounce 0.5s ease-in-out;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .stars {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            background-color: #FFD700;
+            border-radius: 50%;
+            animation: twinkle 1s ease-in-out infinite;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.5); }
+        }
+    </style>
+</head>
+<body>
+    <div class="password-container">
+        <h1>Nhập Mật Khẩu</h1>
+        <input type="password" id="password" placeholder="Nhập mật khẩu...">
+        <br>
+        <button onclick="checkPassword()">Xác Nhận</button>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        const funnyMessages = [
+            "Mật khẩu là sangdeptrai mới chịu cơ",
+            "Sai rồi, thử lại đi! Mật khẩu là sangdeptrai",
+            "Không phải đâu, phải là sangdeptrai mới đúng!",
+            "sangdeptrai là mật khẩu duy nhất!",
+            "Ngọc Minh có biết ai đẹp trai nhất không?",
+            "Mật khẩu là tên của người đẹp trai nhất thế giới!",
+            "Hãy nghĩ về người đẹp trai nhất mà Ngọc Minh biết!",
+            "Mật khẩu là tên của một người rất đẹp trai!",
+            "Mật khẩu là tên của một người đẹp trai vô đối!"
+        ];
+
+        function createHearts() {
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDelay = Math.random() * 4 + 's';
+                document.body.appendChild(heart);
+            }
+        }
+
+        function createStars() {
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                star.className = 'stars';
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(star);
+            }
+        }
+
+        function checkPassword() {
+            const password = document.getElementById('password').value;
+            const message = document.getElementById('message');
+            
+            if (password === "sangdeptrai") {
+                message.textContent = "Anh biết anh đẹp trai rồi mà hihi!";
+                message.style.color = "#FF69B4";
+                createHearts();
+                setTimeout(() => {
+                    window.location.href = "game.html";
+                }, 2000);
+            } else {
+                const randomIndex = Math.floor(Math.random() * funnyMessages.length);
+                message.textContent = funnyMessages[randomIndex];
+                message.style.color = "#FF69B4";
+                message.style.animation = 'bounce 0.5s ease-in-out';
+                setTimeout(() => {
+                    message.style.animation = '';
+                }, 500);
+            }
+        }
+
+        // Thêm hiệu ứng khi nhấn Enter
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // Tạo sao lấp lánh khi trang web load
+        createStars();
+    </script>
+</body>
+</html>
+

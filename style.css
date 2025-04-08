@@ -1,0 +1,89 @@
+/* Reset mặc định */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url(bg.png);
+    font-family: Arial, sans-serif;
+    position: relative; /* Cần để dùng vị trí tương đối cho các phần tử con */
+  }
+  
+  /* Bố cục chính */
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  .hd{
+    
+    background-color: #fff;
+    border: 3px solid #000;
+    margin-left: 5%;
+  }
+  .image{
+    width: auto;
+    height: auto;
+
+  }
+  /* Khung game */
+  .game-container {
+    width: 360px; /* Kích thước bao ngoài khung game */
+    height: 525px;
+    background-color: #fff;
+    border: 3px solid #000;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Đảm bảo không có phần tử nào vượt ra ngoài khung */
+    margin-top: 10%;
+    margin-right: 40%;
+  }
+  
+  /* Canvas game */
+  #gameCanvas {
+    display: block;
+    width: 100%;
+    height: auto; /* Giữ tỉ lệ khung hình */
+  }
+  
+  /* Khung camera */
+  .camera-container {
+    position: absolute; /* Đặt vị trí tuyệt đối */
+    top: 10px; /* Căn góc trên */
+    right: 10px; /* Căn góc phải */
+    width: 200px; /* Độ rộng khung camera */
+    height: 125px; /* Độ cao khung camera */
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 2px solid #000;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Đảm bảo không có phần tử vượt khung */
+  }
+  
+  /* Chỉ hiển thị canvas từ camera */
+  .output_canvas {
+    display: block;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .input_video {
+    display: none; /* Ẩn video nếu không cần thiết */
+  }
+  
+
+
